@@ -19,4 +19,19 @@ const char* mqttUser = "homeassistant";
 const char* mqttPassword = "Yahz2nihie2couJ8zootee1ae5aingi5caing6ucaicigha2Eeshiel7eew3Eith";
 const char* deviceId = "some_device"; // unique device identifier
 
+// MQTT airtime controls. These reduce Wi-Fi traffic before messages leave the adapter.
+// Leave GE_BRIDGE_PUBLISH_ERD_ALLOWLIST undefined to publish every ERD.
+#define GE_BRIDGE_PUBLISH_ONLY_ON_CHANGE false
+#define GE_BRIDGE_MIN_PUBLISH_INTERVAL_MSEC 0UL
+#define GE_BRIDGE_UPTIME_PUBLISH_INTERVAL_MSEC 1000UL
+#define GE_BRIDGE_SUBSCRIBE_TO_WRITES true
+#define GE_BRIDGE_PUBLISH_WRITE_RESULTS true
+
+// Example door-focused allowlist for a GE Profile refrigerator.
+// #define GE_BRIDGE_PUBLISH_ERD_ALLOWLIST \
+//   { \
+//     0x120e, 0x125c, 0x125b, 0x120f, 0x125d, 0x1267, \
+//     0x127a, 0x1279, 0x1288, 0x127c, 0x128b, 0x128f \
+//   }
+
 #endif
