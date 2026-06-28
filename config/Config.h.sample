@@ -20,6 +20,24 @@ const char* mqttPassword = "Yahz2nihie2couJ8zootee1ae5aingi5caing6ucaicigha2Eesh
 const char* deviceId = "some_device"; // unique device identifier
 
 // MQTT airtime controls. These reduce Wi-Fi traffic before messages leave the adapter.
+//
+// GE_BRIDGE_PUBLISH_ONLY_ON_CHANGE:
+//   true:  publish an allowed ERD only when its value changes.
+//          Example: Closed, Closed, Closed -> publish the first Closed only.
+//          Example: Closed, Open -> publish Open immediately.
+//   false: allow unchanged ERDs to repeat, limited by GE_BRIDGE_MIN_PUBLISH_INTERVAL_MSEC.
+//
+// GE_BRIDGE_MIN_PUBLISH_INTERVAL_MSEC:
+//   Applies only to allowed ERD value topics:
+//     geappliances/<deviceId>/erd/0xNNNN/value
+//   It throttles repeated unchanged values when GE_BRIDGE_PUBLISH_ONLY_ON_CHANGE is false.
+//   It does not delay changed values; changes publish immediately.
+//   It does not control the uptime topic.
+//
+// GE_BRIDGE_UPTIME_PUBLISH_INTERVAL_MSEC:
+//   Applies only to:
+//     geappliances/<deviceId>/uptime
+//
 // Leave GE_BRIDGE_PUBLISH_ERD_ALLOWLIST undefined to publish every ERD.
 #define GE_BRIDGE_PUBLISH_ONLY_ON_CHANGE false
 #define GE_BRIDGE_MIN_PUBLISH_INTERVAL_MSEC 0UL
@@ -28,6 +46,7 @@ const char* deviceId = "some_device"; // unique device identifier
 #define GE_BRIDGE_PUBLISH_WRITE_RESULTS true
 
 // Example door-focused allowlist for a GE Profile refrigerator.
+// 5UL * 60UL * 1000UL is 5 minutes in milliseconds.
 // #define GE_BRIDGE_PUBLISH_ERD_ALLOWLIST \
 //   { \
 //     0x120e, 0x125c, 0x125b, 0x120f, 0x125d, 0x1267, \
